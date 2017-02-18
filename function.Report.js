@@ -1,14 +1,14 @@
-module.exports = function(rolesInUse){
+module.exports = function(SpawnRoomRoles){
     
     
     console.log("  ")
     console.log("----------------------------------------------------------Reporter------------------------------------------------------------------------")
     
-    for (var x in rolesInUse) {
+    for (var x in SpawnRoomRoles) {
         
-        var filter = _.filter(Game.creeps, (creep) => creep.memory.role == rolesInUse[x])
+        var filter = _.filter(Game.creeps, (creep) => creep.memory.role == SpawnRoomRoles[x].role.toString())
         
-        console.log("Total Number of " + rolesInUse[x] + ":  " + filter.length)
+        console.log("Total Number of " + SpawnRoomRoles[x].role.toString() + ":  " + filter.length + '  out of  ' + SpawnRoomRoles[x].desiredNo)
     }
     
     console.log("------------------------------------------------------------------------------------------------------------------------------------------")

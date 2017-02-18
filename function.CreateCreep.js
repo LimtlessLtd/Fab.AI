@@ -1,19 +1,19 @@
-module.exports = function (rolesRequired, desiredNo){
+module.exports = function (SpawnRoomRoles){
     
     var body = getBestWorkerBody()
     
-    for (var x in rolesRequired) {
+    for (var x in SpawnRoomRoles) {
         
         if(Game.spawns['Spawn1'].canCreateCreep(body) === OK && !Game.spawns['Spawn1'].spawning){
             
-            var noOfRolesAlready = _.filter(Game.creeps, (creep) => creep.memory.role == rolesRequired[x].toString())
+            var noOfRolesAlready = _.filter(Game.creeps, (creep) => creep.memory.role == SpawnRoomRoles[x].role.toString())
             
-            if (noOfRolesAlready.length < desiredNo[x]) {
+            if (noOfRolesAlready.length < SpawnRoomRoles[x].desiredNo) {
                 
-                if(rolesRequired[x].toString() == 'healer')
+                if(SpawnRoomRoles[x].role.toString() == 'healer')
                 {
                     
-                    var bestHealerBody = getBestMilitaryBody(body.length, 'healer')
+                    var bestHealerBody = getBestMilitaryBody(body.length, SpawnRoomRoles[x].role.toString())
                     
                     bestHealerBody.splice(bestHealerBody.length, 1);
                     bestHealerBody.push(HEAL)
@@ -30,10 +30,10 @@ module.exports = function (rolesRequired, desiredNo){
                     }
                     
                 }
-                else if(rolesRequired[x].toString() == 'patroller')
+                else if(SpawnRoomRoles[x].role.toString() == 'patroller')
                 {
                     
-                    var bestPatrollerBody = getBestMilitaryBody(body.length, 'patroller')
+                    var bestPatrollerBody = getBestMilitaryBody(body.length, SpawnRoomRoles[x].role.toString())
                     
                     bestPatrollerBody.splice(bestPatrollerBody.length, 1);
                     bestPatrollerBody.push(ATTACK)
@@ -53,10 +53,10 @@ module.exports = function (rolesRequired, desiredNo){
                 
                 var newName
                 newName = Game.spawns['Spawn1'].createCreep(body, undefined,{
-                    role: rolesRequired[x].toString()
+                    role: SpawnRoomRoles[x].role.toString()
                 })
                 
-                console.log('Spawning new ' + rolesRequired[x].toString() + ': ' + newName + ' || With a body of : ' + body)
+                console.log('Spawning new ' + SpawnRoomRoles[x].role.toString() + newName + '   With a body of : ' + body)
                 
                 return
             }
